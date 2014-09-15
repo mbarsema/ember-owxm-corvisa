@@ -1,0 +1,318 @@
+/* Put your CSS here */
+.ember-application {
+    margin: 20px;
+}
+
+.ember-view {
+	width: 100%;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	margin: 20px;
+	background-color: black;
+	body: 100%;
+	cursor: default;
+}
+
+h1 {
+	font-size: 30px;
+	color: #a93334;
+	text-shadow: 1px 1px 0 #eee, 2px 2px 0 #707070;
+	line-height: 30px;
+}
+
+h2 {
+	font-size: 40px;
+	color: #a93334;
+	text-shadow: 1px 1px 0 #eee, 2px 2px 0 #707070;
+	line-height: 40px;
+}
+
+.high {
+	color: red;
+	float: left;
+}
+
+.low {
+	color: blue;
+	float: left;
+	padding-left: 20px;
+}
+
+div#error{
+	color: red;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+div#locations {
+	float: left;
+	width: 10%;
+	box-sizing: border-box;
+	overflow: scroll;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    clear: right;
+    background-color: white;
+    min-height: 450px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    background-color: #a93334;
+}
+
+div#currents {
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    box-sizing: border-box;
+    clear: right;
+    float: left;
+    width: 45%;
+    min-height: 450px;
+    overflow: hidden;
+}
+
+
+
+div#forecasts {
+    box-sizing: border-box;
+    float: left;
+    width: 45%;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    overflow: hidden;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    height: 450px;
+    background-color: white;
+    text-align: center;
+}
+
+div.forecast-details {
+	display: none;
+}
+
+div.forecast-details-open {
+	background-color: white;
+}
+
+div#currents-container {
+	background-color: white;
+	width: 100%;
+	padding: 5px 10px;
+	min-height: 367px;
+}
+
+div#currents-header, div#forecast-header, div#locations-header {
+	height: 50px;
+	font-weight: bold;
+	background-color: #a93334;
+	color: white;
+	font-size: 30px;
+    border-bottom-style: solid;
+    border-bottom-color: black;
+    border-bottom-width: 1px;
+    line-height: 45px;
+    width: 100%;
+    text-align: center;
+    text-shadow: 3px 3px 0 #000, 1px 1px 0 #707070;
+}		
+
+div#locations-header {
+	font-size: 20px;
+	height: 70px;
+	line-height: 50px;
+}
+
+img#current-icon {
+    clear: both;
+    float: left;
+    //margin-top: -30px;
+}
+div#current-temp-standard, div#current-temp-metric {
+    float: left;
+    font-size: 30px;
+    font-weight: bold;
+    padding-right: 20px;
+    clear: left;
+}
+div#current-conditions {
+    clear: left;
+    float: left;
+    font-size: 24px;
+    line-height: 30px;
+    padding-right: 20px;
+}
+div#current-conditions-temps-standard, div#current-conditions-temps-metric {
+    font-size: 30px;
+    font-weight: bold;
+    float: left;
+}
+
+dl#currents-list {
+	clear: both;
+	-webkit-column-count: 2; /* Chrome, Safari, Opera */
+    -moz-column-count: 2; /* Firefox */
+    column-count: 2;
+}
+
+dl#currents-list > dt {
+	float: left;
+	width: 140px;
+	font-weight: bold;
+}
+
+ul#weather-tabs {
+    width: 100%;
+    margin-left: -40px;
+	margin-top: -20px;
+    list-style-type: none;
+    overflow: scroll;
+}
+li.location {
+    box-sizing: border-box;
+    text-align: center;
+    width: 100%;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+    background-color: #a93334;
+    color: white;
+    //border-bottom-style: none;
+    cursor: pointer;
+}
+
+div.forecast-card {
+	float: left;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-color: black;
+	border-width: 1px;
+	box-sizing: border-box;
+	width: 33%;
+	background-color: white;
+	height: 80px;
+	overflow: scroll;
+}
+
+div#forecasts .forecast-card:nth-of-type(3n + 1) { 
+	width: 34%; 
+}
+
+
+div.header, div.last_updated {
+	background-color: #a93334;
+	text-align: center;
+	color: white;
+	font-weight: bold;
+}
+
+div.forecast-card > img.icon {
+	float: left;
+	padding-top: 5px;
+	//width: 60px;
+	//height: 60px;
+	//border-color: black;
+	//border-style: solid;
+	//border-width: 1px;
+}
+
+div.forecast-card > .high {
+	padding-top: 10px;
+}
+
+div.forecast-card > .low {
+	padding-top: 10px;
+}
+
+div.forecast-conditions {
+	float: left;
+	width: 50%;
+}
+
+form {
+	float: right;
+}
+
+input[type=text]
+{
+    //background-color: #BFBDBD;
+    border:solid 1px #BFBDBD;
+    color: #979797;
+    height: 28px;
+    padding-left:10px;
+    width: 191px;
+    box-shadow: 2px 2px 0 #828181 inset;
+}
+input[type=button]
+{
+    //background-color: #1E1E1E;
+    color: #979797;
+    height: 24px;
+    width: 103px;
+    color: #bbbbbb;
+    text-transform:uppercase;
+    box-shadow:-1px 2px #6E6B6A inset;
+}
+
+input[type=button], input[type=text]
+{
+    border: 0;
+    border-radius:5px;
+    font-family: Sansation,Arial;
+}
+
+.standard {
+	display: block;
+}
+
+.metric {
+	display: none;
+}
+
+li.selected-tab {
+	background-color: purple;
+	color: white;
+}
+
+li.updated-tab {
+	background-color: yellow;
+}
+
+button#save, button#delete, button.toggle, button.day-toggle {
+	background: none;
+    background-color: purple;
+    border-radius: 30px;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    width: 50px;
+    outline: none;
+    cursor: pointer;
+}
+
+button.day-toggle {
+	width: 100px;
+}
+
+/*button.toggle {
+	color: white;
+	border-radius: 4px;
+	text-shadow: none;
+	box-shadow: none;
+	text-transform: none;
+	background: rgb(66, 184, 221);
+}*/
+
+/*
+button.on {
+	display: block;
+}
+
+button.off {
+	display: none;
+}*/

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Weather Demo - Open Weather/Ember</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/libs/jquery-1.10.2.js"></script>
+  <script src="js/libs/handlebars-1.1.2.js"></script>
+  <script src="js/libs/ember-1.7.0.js"></script>
+  <script src="js/app.js"></script>	
+</head>
+<body>
+	<script type="text/x-handlebars" id="application">
+		<h1>Weather Report</h1>
+		<form id="search-form" onsubmit="return false;">
+  			<input id="location-search" class="search" type="text" name="location" placeholder="Enter city (e.g. Chicago, IL)">
+  			<button id="search-btn" class="search" onclick="searchWeather(document.getElementById('location-search').value);">Search</button>
+  		</form>
+  		<button value="F" class="toggle selected" onclick="toggle('s');">&deg;F</button>
+    	<button value="C" class="toggle" onclick="toggle('m');">&deg;C</button>
+  		<button class="day-toggle" onclick="toggleDates(3);">3 Days</button>
+  		<button class="day-toggle" onclick="toggleDates(5);">5 Days</button>
+  		<button class="day-toggle" onclick="toggleDates(10);">10 days</button>
+  		<button class="day-toggle" onclick="toggleDates(15);">15 days</button>
+  		<button class="day-toggle" onclick="toggleDates(7);">1 Week</button>
+  		<button class="day-toggle" onclick="toggleDates(14);">2 Weeks</button>
+  		<button id="save" class="action-btn off" onclick="registerLocation();">+</button>
+  		<button id="delete" class="action-btn off" onclick="unregisterLocation();">-</button>
+		{{outlet}}
+	</script>
+  	<script type="text/x-handlebars" id="index">
+  		<div id="error"></div>
+  		<div id="locations">
+  		<div id="locations-header">Locations</div>
+  		<ul id="weather-tabs"><li id="weather-tab-current" class="location selected-tab" onclick="searchWeather('current');">My Location</li></ul>
+  		</div>
+  		<div id="currents">
+  			<div id="currents-header">Currently</div>
+  			<div id="current-conditions-last_updated" class="currents time last_updated">
+  				<label>Last updated at: </label><time>{{ content.currents.last_updated }}</time>
+  			</div>
+  			<div id="currents-container">
+  			<h2>{{ content.currents.location.city }}</h2>
+  			<img id="current-icon" class="currents icon" {{bind-attr src=content.currents.icon}}> 			
+  			<div id="current-temp-standard" class="currents temp current standard">
+  				{{ content.currents.temps.fahrenheit.current }}&deg;F
+  			</div>
+  			<div id="current-temp-metric" class="currents temp current metric">
+  				{{ content.currents.temps.celsius.current }}&deg;C
+  			</div>
+  			<div id="current-conditions-temps-standard" class="currents temps standard">
+  				<span class="currents temp high">&uarr;{{ content.currents.temps.fahrenheit.high }}&deg;F</span>
+  				<span class="currents temp low">&darr;{{ content.currents.temps.fahrenheit.low }}&deg; F</span>
+  			</div>
+  			<div id="current-conditions-temps-metric" class="currents temps metric">
+  				<span class="currents temp high">&uarr;{{ content.currents.temps.celsius.high }}&deg;C</span>
+  				<span class="currents temp low">&darr;{{ content.currents.temps.celsius.low }}&deg;C</span>
+  			</div>
+  			<dl id="currents-list">
+  				<dt>Conditions</dt>
+  				<dd id="current-conditions" class="currents conditions">{{ content.currents.conditions }}</dd>
+  			
+  				<dt>Sunrise</dt>
+  				<dd>{{ content.currents.sunrise }}</dd>
+  				<dt>Sunset</dt>
+  				<dd>{{ content.currents.sunset }}</dd>
+  		
+  				<dt>Humidity</dt>
+  				<dd>{{ content.currents.humidity }}&#37;</dd>
+  				<!--{{ content.currents.weather.description }}-->
+				<dt>Cloud Coverage</dt>
+				<dd>{{ content.currents.cloud_coverage }}&#37;</dd>
+  				
+  				<!-- Standard and Metric -->
+  				<dt>Wind</dt>
+  				<dd id="currents-wind-mph" class="currents wind standard">
+  					{{#if content.currents.wind.direction.dir}}
+  						{{ content.currents.wind.direction.dir }} at 
+  					{{/if}}
+  					{{ content.currents.wind.speed.mph }} mph
+  				</dd>
+  				<dd id="currents-wind-mps" class="currents wind metric">
+  					{{#if content.currents.wind.direction.dir}}
+  						{{ content.currents.wind.direction.dir }} at 
+  					{{/if}}
+  					{{ content.currents.wind.speed.mps }} m/s
+  				</dd>
+  				<dt>Barometer</dt>
+  				<dd id="currents-pressure-barometric-in" class="currents pressure standard">
+  					{{ content.currents.pressure.barometric.in }} in
+  				</dd>
+  				<dd id="currents-pressure-barometric-mb" class="currents pressure metric">
+  					{{ content.currents.pressure.barometric.mb }} mb
+  				</dd>
+  				{{#if content.currents.pressure.sea_level.in}}
+  					<dt>Sea Level</dt>
+  					<dd id="currents-pressure-sea-in" class="currents pressure standard">
+  						{{ content.currents.pressure.sea_level.in }} in
+  					</dd>
+  				{{/if}}
+  				{{#if content.currents.pressure.sea_level.mb }}
+  					<dt>Sea Level</dt>
+  					<dd id="currents-pressure-sea-mb" class="currents pressure metric">
+  						{{ content.currents.pressure.sea_level.mb }} mb
+  					</dd>
+  				{{/if}}
+  				{{#if content.currents.pressure.ground_level.in }}
+  					<dt>Ground Level</dt>
+  					<dd id="currents-pressure-ground-in" class="currents pressure standard">
+  						{{ content.currents.pressure.ground_level.in }} in
+  					</dd>
+  				{{/if}}
+  				{{#if content.currents.pressure.ground_level.mb }}
+  					<dt>Ground Level</dt>
+  					<dd id="currents-pressure-ground-mb" class="currents pressure metric">
+  						{{ content.currents.pressure.ground_level.mb }} mb
+  					</dd>
+  				{{/if}}
+  				<!-- End standard and metric -->
+  			</dl>
+  			</div>
+  		</div>
+  		<div id="forecasts">
+  			<div id="forecast-header">{{ content.forecasts.length }} Day Forecast</div>
+  			{{#each forecast in content.forecasts}}
+  				<div {{bind-attr id=forecast.id.card}} class="forecast-card">
+  					<div {{bind-attr id=forecast.id.header}} class="forecast header">{{ forecast.day }}</div>
+  					<img {{bind-attr id=forecast.id.icon}} class="forecast icon" {{bind-attr src=forecast.icon}}>
+  					
+  					<div {{bind-attr id=forecast.id.temp.fahrenheit.high}} class="forecast temp high standard">
+  						&uarr;{{ forecast.temps.fahrenheit.high }}&deg;F
+  					</div>
+  					<div {{bind-attr id=forecast.id.temp.fahrenheit.low}} class="forecast temp low standard">
+  						&darr;{{ forecast.temps.fahrenheit.low }}&deg;F
+  					</div>
+  					<div {{bind-attr id=forecast.id.temp.celsius.high}} class="forecast temp high metric">
+  						&uarr;{{ forecast.temps.celsius.high }}&deg;C
+  					</div>
+  					<div {{bind-attr id=forecast.id.temp.celsius.low}} class="forecast temp low metric">
+  						&darr;{{ forecast.temps.celsius.low }}&deg;C
+  					</div>
+  					<div {{bind-attr id=forecast.id.conditions}} class="forecast-conditions">{{ forecast.conditions }}</div>
+  				</div>
+  			{{/each}} 
+  		</div>
+  	</script>
+  	<!--
+  		<div id="forecast-details">	
+  			<div id="forecast-details-header">Detailed Forecast</div>
+  			{{#each forecast in content.forecasts}}
+  				<div {{bind-attr id=forecast.id.details}} class="forecast-details">
+  					<div {{bind-attr id=forecast.id.detheader }} class="forecast-details-header">
+  						Details for {{ forecast.last_updated }}</dd>
+  					</div>
+  					<dl class="forecast">
+  						<dt>Conditions</dt>
+  						<dd>{{ forecast.conditions_long }}</dd>
+  						<dt>Pressure</dt>
+  						<dd class="standard">{{ forecast.pressure.barometric.in }} in</dd>
+  						<dd class="metric">{{ forecast.pressure.barometric.mb }} mb</dd>
+  						<dt>Humidity</dt>
+  						<dd>{{ forecast.humidity }}%</dd>
+  						<dt>Wind Speed</dt>
+  						<dd class="standard">{{ forecast.wind.direction.dir }} at {{ forecast.wind.speed.mph }} mph</dd>
+  						<dd class="metric">{{ forecast.wind.direction.dir }} at {{ forecast.wind.speed.mps }} m/s</dd>
+  						<dt>Clouds</dt>
+  						<dd>{{ forecast.cloud_coverage }}%</dd>
+  						<dt>Percent Chance</dt>
+  						<dd>{{ forecast.percent_chance }}%</dd>
+  						<dt>Morning</dt>
+  						<dd class="standard">{{ forecast.temps.fahrenheit.period.morning }}&deg;F</dd>
+  						<dd class="metric">{{ forecast.temps.celsius.period.morning }}&deg;C</dd>
+  						<dt>Day</dt>
+  						<dd class="standard">{{ forecast.temps.fahrenheit.period.daytime }}</dd>
+  						<dd class="metric">{{ forecast.temps.celsius.period.daytime }}</dd>
+  						<dt>Evening</dt>
+  						<dd class="standard">{{ forecast.temps.fahrenheit.period.evening }}</dd>
+  						<dd class="metric">{{ forecast.temps.celsius.period.evening }}</dd>
+  						<dt>Night</dt>
+  						<dd class="standard">{{ forecast.temps.fahrenheit.period.overnight }}</dd>
+  						<dd class="metric">{{ forecast.temps.celsius.period.overnight }}</dd>
+  					</dl>
+  				</div>
+  			{{/each}}
+  			</div>
+  		</div>
+  		-->
+  </body>
+</html>
